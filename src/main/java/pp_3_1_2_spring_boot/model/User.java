@@ -18,15 +18,15 @@ public class User {
     private String surname;
 
     @Column(name = "age")
-    private Byte age;
+    private Integer age;
 
-    @Column(name = "email")
+    @Column(name = "sex")
     private String sex;
 
     public User() {
     }
 
-    public User(String name, String surname, byte age, String sex) {
+    public User(String name, String surname, Integer age, String sex) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -57,11 +57,11 @@ public class User {
         this.surname = surname;
     }
 
-    public byte getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(Byte age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
