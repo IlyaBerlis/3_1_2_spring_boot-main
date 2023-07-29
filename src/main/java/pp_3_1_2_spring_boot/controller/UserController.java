@@ -1,6 +1,5 @@
 package pp_3_1_2_spring_boot.controller;
 
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +38,16 @@ public class UserController {
     }
 
     @PostMapping("/new")
-    public String add(@ModelAttribute("user") @Valid User user) {
+    public String add(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") long id, Model model){
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        return "delete";
     }
 
     @DeleteMapping("/delete/{id}")
@@ -58,7 +64,7 @@ public class UserController {
     }
 
     @PatchMapping("/edit")
-    public String update(@ModelAttribute("user") @Valid User user) {
+    public String update(@ModelAttribute("user") User user) {
         userService.updateUser(user);
         return "redirect:/";
     }
