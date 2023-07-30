@@ -43,22 +43,38 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id) {
-        userService.removeUser(id);
+    @PostMapping("/edit/{id}")
+    public String updateUser(@PathVariable("id") long id, @ModelAttribute("user") User updateUser){
+        User user = userService.getUserById(id);
+
+        if (user == null){
+            return "redirect:/";
+        }
+
+        user.setName(updateUser.getName());
+        user.setSurname(updateUser.getSurname());
+        user.setAge(updateUser.getAge());
+        user.setSex(updateUser.getSex());
+
+        userService.updateUser(user);
         return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
-    public String updateUserForm(@PathVariable("id") long id, Model model) {
+    public String showEditForm(@PathVariable("id") long id, Model model) {
         User user = userService.getUserById(id);
+
+        if (user == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("user", user);
         return "edit";
     }
 
-    @PatchMapping("/edit")
-    public String update(@ModelAttribute("user") User user) {
-        userService.updateUser(user);
+    @PostMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") long id) {
+        userService.removeUser(id);
         return "redirect:/";
     }
 
