@@ -7,7 +7,7 @@
 <body>
 <h1>Delete User</h1>
 <p>Вы действительно хотите удалить пользователя с идентификатором <strong th:text="${user.userId}">UserId</strong>?</p>
-<form th:method="DELETE" th:action="@{'delete/' + ${user.userId}}">
+<form method="POST" action="@{/delete/${user.userId}}">
   <input type="submit" class="buttonDelete" value="Delete"/>
 </form>
 </body>

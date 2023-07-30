@@ -43,21 +43,14 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id, Model model){
-        User user = userService.getUserById(id);
-        model.addAttribute("user", user);
-        return "delete";
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable("id") long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") long id) {
         userService.removeUser(id);
         return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
-    public String updateUser(@PathVariable("id") long id, Model model) {
+    public String updateUserForm(@PathVariable("id") long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "edit";
@@ -67,5 +60,10 @@ public class UserController {
     public String update(@ModelAttribute("user") User user) {
         userService.updateUser(user);
         return "redirect:/";
+    }
+
+    @RequestMapping("/favicon.ico")
+    @ResponseBody
+    void returnNoFavicon() {
     }
 }
