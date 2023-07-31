@@ -3,30 +3,30 @@ package pp_3_1_2_spring_boot.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pp_3_1_2_spring_boot.model.User;
-import pp_3_1_2_spring_boot.service.UserService;
+import pp_3_1_2_spring_boot.entity.User;
+import pp_3_1_2_spring_boot.service.UserServiceImpl;
 
 import java.util.List;
 
 @Controller
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     @GetMapping("/")
     public String users(Model model) {
-        List<User> users = userService.getAllUsers();
+        List<User> users = userServiceImpl.getAllUsers();
         model.addAttribute("users", users);
         return "users";
     }
 
     @GetMapping("/{id}")
     public String getUser(@PathVariable(value = "id") long id, Model model) {
-        User user = userService.getUserById(id);
+        User user = userServiceImpl.getUserById(id);
         model.addAttribute("user", user);
         return "user";
     }
@@ -39,13 +39,13 @@ public class UserController {
 
     @PostMapping("/new")
     public String add(@ModelAttribute("user") User user) {
-        userService.addUser(user);
+        userServiceImpl.addUser(user);
         return "redirect:/";
     }
 
     @PostMapping("/edit/{id}")
     public String updateUser(@PathVariable("id") long id, @ModelAttribute("user") User updateUser){
-        User user = userService.getUserById(id);
+        User user = userServiceImpl.getUserById(id);
 
         if (user == null){
             return "redirect:/";
@@ -56,13 +56,13 @@ public class UserController {
         user.setAge(updateUser.getAge());
         user.setSex(updateUser.getSex());
 
-        userService.updateUser(user);
+        userServiceImpl.updateUser(user);
         return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") long id, Model model) {
-        User user = userService.getUserById(id);
+        User user = userServiceImpl.getUserById(id);
 
         if (user == null) {
             return "redirect:/";
@@ -74,7 +74,7 @@ public class UserController {
 
     @PostMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
-        userService.removeUser(id);
+        userServiceImpl.removeUser(id);
         return "redirect:/";
     }
 

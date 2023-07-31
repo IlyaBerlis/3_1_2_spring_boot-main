@@ -1,4 +1,4 @@
-package pp_3_1_2_spring_boot.model;
+package pp_3_1_2_spring_boot.entity;
 
 import jakarta.persistence.*;
 
